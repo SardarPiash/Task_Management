@@ -1,7 +1,7 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import HeroSection from "./HeroSection";
-import TaskBoard from "./Taskboard/taskboard";
+import TaskBoard from "./Tasks/taskboard";
 
 export default function App() {
   return (
