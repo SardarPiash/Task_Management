@@ -45,9 +45,29 @@ function handleEditForm(task) {
     setShowAddTaskMoral(false);
   }
 
+  ///close button function on add-edit task moral......
+  function handleOnClose(){
+	setShowAddTaskMoral(false);
+	setEditableInfo(null);
+  }
+
+  ////delete single task..........
+  function handleSingleDelete(taskId){
+
+	const singleDeleteTask=tasks.filter((task)=>task.id !=taskId)
+	setTask(singleDeleteTask);
+  }
+
+////delete all task button.....
+  function handleDeleteAll(){
+	tasks.length = 0;
+	setTask([...tasks])
+	console.log("delete all")
+  }
+
   return (
     <section className="mb-20" id="tasks">
-      {showAddTaskMoral && <Addtask saveTask={submitTask} editableInfo={editableInfo}/>}
+      {showAddTaskMoral && <Addtask onClose={handleOnClose} saveTask={submitTask} editableInfo={editableInfo}/>}
       <div className="container">
         <div className="p-2 flex justify-end">
           <form>
@@ -57,9 +77,9 @@ function handleEditForm(task) {
           </form>
         </div>
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-          <TaskAction addTask={handleOpenForm} />
+          <TaskAction deleteAll={handleDeleteAll} addTask={handleOpenForm} />
           <div className="overflow-auto h-full w-full">
-            <Tasklist tasks={tasks} onEdit={handleEditForm}/>
+            <Tasklist onSingleDelete={handleSingleDelete} tasks={tasks} onEdit={handleEditForm}/>
           </div>
         </div>
       </div>
