@@ -71,6 +71,14 @@ export default function TaskBoard() {
 
 	setTask(newArray);
   }
+
+  function handleSearch(text){
+    const searchTask = tasks.filter(task=>{
+      return task.title.toLowerCase().includes(text.toLowerCase());
+    })
+    setTask(searchTask);
+  }
+
   return (
     <section className="mb-20" id="tasks">
       {showAddTaskMoral && (
@@ -84,7 +92,7 @@ export default function TaskBoard() {
         <div className="p-2 flex justify-end">
           <form>
             <div className="flex">
-              <Search />
+              <Search onSerach={handleSearch}/>
             </div>
           </form>
         </div>
