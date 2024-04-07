@@ -1,7 +1,6 @@
 import { FaStar } from "react-icons/fa6";
 
-export default function Tasklist({ tasks, onEdit, onSingleDelete }) {
-
+export default function Tasklist({ tasks, onEdit, onSingleDelete, isFavorite }) {
   console.log(tasks);
   return (
     <table className="table-fixed overflow-auto xl:w-full">
@@ -32,51 +31,62 @@ export default function Tasklist({ tasks, onEdit, onSingleDelete }) {
       </thead>
 
       <tbody>
-      {tasks.length > 0 ? (
-  tasks.map((task) => (
-    <tr
-      key={task.id}
-      className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
-    >
-      <td>
-        {task.isFavorite ? (
-          <FaStar color="yellow" />
+        {tasks.length > 0 ? (
+          tasks.map((task) => (
+            <tr
+              key={task.id}
+              className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
+            >
+              <td>
+                <button onClick={()=>isFavorite(task.id)}>
+                {task.isFavorite ? (
+                  <FaStar color="yellow" />
+                ) : (
+                  <FaStar color="gray" />
+                )}
+                </button>
+              </td>
+              <td>{task.title}</td>
+              <td>
+                <div>{task.description}</div>
+              </td>
+              <td>
+                <ul className="flex justify-center gap-1.5 flex-wrap">
+                  {task.tags.map((tag) => (
+                    <li key={tag}>
+                      <span className="inline-block h-5 whitespace-nowrap rounded-[45px] bg-[#00D991A1] px-2.5 text-sm capitalize text-[#F4F5F6]">
+                        {tag}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </td>
+              <td className="text-center">{task.priority}</td>
+              <td>
+                <div className="flex items-center justify-center space-x-3">
+                  <button
+                    className="text-red-500"
+                    onClick={() => onSingleDelete(task.id)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="text-blue-500"
+                    onClick={() => onEdit(task)}
+                  >
+                    Edit
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))
         ) : (
-          <FaStar color="gray" />
+          <tr>
+            <td colSpan="6" className="text-center">
+              No tasks available right now
+            </td>
+          </tr>
         )}
-      </td>
-      <td>{task.title}</td>
-      <td>
-        <div>{task.description}</div>
-      </td>
-      <td>
-        <ul className="flex justify-center gap-1.5 flex-wrap">
-          {task.tags.map((tag) => (
-            <li key={tag}>
-              <span className="inline-block h-5 whitespace-nowrap rounded-[45px] bg-[#00D991A1] px-2.5 text-sm capitalize text-[#F4F5F6]">
-                {tag}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </td>
-      <td className="text-center">{task.priority}</td>
-      <td>
-        <div className="flex items-center justify-center space-x-3">
-          <button className="text-red-500" onClick={()=>onSingleDelete(task.id)}>Delete</button>
-          <button className="text-blue-500" onClick={() => onEdit(task)}>Edit</button>
-        </div>
-      </td>
-    </tr>
-  ))
-) : (
-  <tr>
-    <td colSpan="6" className="text-center">
-      No tasks available right now
-    </td>
-  </tr>
-)}
-
       </tbody>
     </table>
   );
