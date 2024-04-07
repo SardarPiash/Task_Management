@@ -12,7 +12,7 @@ Search for tasks by title.
 React.js
 JavaScript
 HTML
-CSS
+Tailwind CSS
 
 ## Installation
 To run this application locally, follow these steps:
